@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+
+{% block nav %}
+{% if current_user.admin %}
+{% include 'includes/admin-navbar.html' %}
+{% else %}
+{% include 'includes/navbar.html' %}
+{% endif %}
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 my-5 mx-auto">
+            <div class="card p-5 border-0 rounded-0 shadow" >
+                <div class="card-body">
+                  <h5 class="card-title text-center">{{title}}</h5>
+            
+                  <div>
+                    <form  method="POST" enctype="multipart/form-data" novalidate>
+                      {{form.csrf_token}}
+                      <div class="mb-3">
+                        {{form.title.label(class="form-label")}}
+                        {{form.title(class="form-control")}}
+                        {% for err in form.title.errors %}
+                          <span style="color:red">{{ err }}</span>
+                        {% endfor %}
+                      </div>
+                      <div class="mb-3">
+                        {{form.subtitle.label(class="form-label")}}
+                        {{form.subtitle(class="form-control")}}
+                        {% for err in form.subtitle.errors %}
+                          <span style="color:red">{{ err }}</span>
+                        {% endfor %}
+                      </div>
+
+                      <div class="mb-3">
+                        {{form.body.label(class="form-label")}}
+                        {{form.body(class="form-control")}}
+                        {% for err in form.body.errors %}
+                          <span style="color:red">{{ err }}</span>
+                        {% endfor %}
+                      </div>
+                      {% if blog %}
+                      <div class="mb-3">
+                        <input type="file" class="form-control" name="img_url" > 
+                        {% if blog.image %}
+                        <a href="{{url_for('static',filename='img/' + blog.image)}}">images/{{ blog.image}}</a>
+                        {% endif %}
+                      </div>
+                      <div class="mb-3">
+                        <input type="file" class="form-control" name="audio_url" >
+                        {% if blog.audio %}
+                        <a href="{{url_for('static',filename='audio/' + blog.audio)}}">audios/{{ blog.audio}}</a>
+                        {% endif %} 
+                      </div>
+                      <div class="mb-3">
+                        <input type="file" class="form-control" name="video_url"> 
+                        {% if blog.video %}
+                        <a href="{{url_for('static',filename='video/' + blog.video)}}">videos/{{ blog.video}}</a>
+                        {% endif %}
+                      </div>
+                      {% else %}
+                      <div class="mb-3">
+                        {{form.img_url.label(class="form-label")}}
+                        {{form.img_url(class="form-control")}}
+                        {% for err in form.img_url.errors %}
+                          <span style="color:red">{{ err }}</span>
+                        {% endfor %}
+                      </div>
+                      <div class="mb-3">
+                        {{form.audio_url.label(class="form-label")}}
+                        {{form.audio_url(class="form-control")}}
+                        {% for err in form.audio_url.errors %}
+                          <span style="color:red">{{ err }}</span>
+                        {% endfor %}
+                      </div>
+                      <div class="mb-3">
+                        {{form.video_url.label(class="form-label")}}
+                        {{form.video_url(class="form-control")}}
+                        {% for err in form.video_url.errors %}
+                          <span style="color:red">{{ err }}</span>
+                        {% endfor %}
+                      </div>
+                      {% endif %}
+                      <div align='center'>
+                        {{form.submit(class="btn btn-info")}}
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

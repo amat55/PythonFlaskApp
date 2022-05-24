@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block nav %}
+{% include 'includes/admin-navbar.html' %}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto my-3">
+            <div class="card  border-0 ">
+                <div class="card-body">
+                    <h3 class="text-center">All Users</h3>
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Created</th>
+                            <th scope="col">Admin</th>
+                            <th></th>
+                            <th></th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for user in users %}
+                            <tr>
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{user.name}}</td>
+                                <td>{{user.email}}</td>
+                                <td><small class="text-muted">{{ moment(user.created_at).fromNow() }}</small></td>
+                                <td>
+                                    <form method="post">
+                                    <input type="hidden" name="user_id" value="{{user.id}}">
+                                    <select name="admin" class="form-control">
+                                    
+                                    <option value="1" {% if user.admin == True %}selected{% endif %}>Yes</option>
+                                    <option value="0" {% if user.admin == False %}selected{% endif %}>No</option>
+                                    
+                                </select></td>
+                                <td>
+                                    <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                                </form>
+                                </td>
+                                
+                                <td><a href="{{ url_for('admin_bp.delete_user', user_id=user.id) }}" class="btn btn-danger btn-sm">Delete</a></td>
+                            </tr>
+                          {% endfor %}
+                          
+                        </tbody>
+                      </table>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

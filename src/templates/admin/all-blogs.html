@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block nav %}
+{% include 'includes/admin-navbar.html' %}
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto my-3">
+            <div class="card  border-0">
+                <div class="card-body">
+                    <h3 class="text-center">All Blogs</h3>
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Posted on</th>
+                          
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for blog in blogs %}
+                            <tr>
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{blog.title}}</td>
+                                <td>{{blog.user.name}}</td>
+                                <td><small class="text-muted">{{ moment(blog.created_at).fromNow() }}</small></td>
+                               
+                                
+                                <td><a href="{{ url_for('blog_bp.view_blog', blog_id=blog.id) }}" class="btn btn-success btn-sm">View</a> </td>
+                                <td><a href="{{ url_for('blog_bp.edit_blog', blog_id=blog.id) }}" class="btn btn-info btn-sm">Edit</a> </td>
+                                <td><a href="{{ url_for('blog_bp.delete_blog', blog_id=blog.id) }}" class="btn btn-danger btn-sm">Delete</a></td>
+                            </tr>
+                          {% endfor %}
+                          
+                        </tbody>
+                      </table>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

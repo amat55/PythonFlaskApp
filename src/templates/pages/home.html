@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+
+<div class="container">
+  {% if top_user %}
+  <div class="row">
+    <div class="col mt-3">
+      
+      <div class="card border-0 rounded-0 shadow">
+        <div class="card-body">
+          <h5 class="text-center mb-5">Top Logged User</h5>
+          <ol class="d-flex justify-content-between">
+            {% for user in top_user %}
+              <li>{{user.name}} {{user.surname}}</li>
+            {% endfor %}
+          </ol>
+        </div>
+      </div>
+    
+    
+    </div>
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="col">
+
+      {% for blog in blogs %}
+      
+      <div class="col-md-4 my-3">
+        <div class="card border-0 rounded-0 shadow">
+          <img src="{{url_for('static', filename='img/' + blog.image)}}" class="card-img-top rounded-0" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{blog.title}}</h5>
+          <p class="card-text"><small class="text-muted">Posted on {{ moment(blog.created_at).fromNow() }}</small> <small class="text-muted">By {{blog.user.name }}</small></p>
+          <p class="card-text">{{blog.subtitle}}</p>
+          <a href="{{ url_for('blog_bp.view_blog', blog_id=blog.id) }}" class="btn btn-info">Read more ...</a>
+        </div>
+      </div>
+      
+    </div>
+    
+    
+    
+    {% endfor %}
+  </div>
+  
+</div>
+</div>
+
+
+
+
+{% endblock content %}

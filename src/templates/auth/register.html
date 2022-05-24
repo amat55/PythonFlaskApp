@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 my-5 mx-auto">
+            <div class="card border-0 rounded-0 shadow p-5" >
+                <div class="card-body">
+                  <h5 class="card-title text-center">{{title}}</h5>
+            
+                  <div>
+                    {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "info"}) }}
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
